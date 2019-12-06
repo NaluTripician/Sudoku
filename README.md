@@ -1,2 +1,2 @@
 # Sudoku
-Generates Sudoku puzzles. 
+Generates Sudoku puzzles.
