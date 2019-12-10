@@ -334,14 +334,7 @@ public class Generator
 
   public static int[][] genSudoku(int[][] solution,int difficulty)
   {
-    /* Naieve implemtation (will change in the future to include patterns)
-    randomly generates a Sudoku from a solution with a difficulty from 0 - 4
-    0| Very Easy  (36-40 removed)
-    1| Easy       (41-45 removed)
-    2| Medium     (46-50 removed)
-    3| Hard       (51-57 removed)
-    4| Very Hard  (58-64 removed)
-    */
+    // Randomly generates a Sudoku from a solution with a difficulty from 0 - 100?
 
     Random rando = new Random();
     int trial;
@@ -376,14 +369,55 @@ public class Generator
     return puzzle;
   }
 
+  public static int[][] genDiagSym(int[][] solution,int difficulty)
+  {
+    // Randomly generates a Diagonally Symmetric Sudoku from a solution with a difficulty from 0 - 100?
+
+    Random rando = new Random();
+    int trial;
+
+    int [][] puzzle = copy(solution);
+
+    trial = difficulty + 5;
+
+    while(trial > 0)
+    {
+      int x = rando.nextInt(9);
+      int y = rando.nextInt(9);
+
+      while(puzzle[x][y] == 0)
+      {
+        x = rando.nextInt(9);
+        y = rando.nextInt(9);
+      }
+
+      int diagX = 8 - x;
+      int diagY = 8 - y;
+
+      int backup = puzzle[x][y];
+      int diagBackup = puzzle[diagX][diagY];
+
+      puzzle[x][y] = 0;
+      puzzle[diagX][diagY] = 0;
+
+      if(numSol(copy(puzzle)) != 1)
+      {
+        trial--;
+        puzzle[x][y] = backup;
+        puzzle[diagX][diagY] = diagBackup;
+      }
+
+
+    }
+    return puzzle;
+  }
+
   public static void main(String[] args)
   {
     int [][] guy = genSolution();
     print(guy);
     System.out.println("___");
-    int[][] puzz = genSudoku(guy,50);
+    int[][] puzz = genDiagSym(guy,100);
     print(puzz);
   }
-
-
 }
