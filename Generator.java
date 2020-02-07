@@ -1,6 +1,11 @@
 import java.util.*;
 
-public class Generator
+import java.awt.Canvas;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+import java.awt.Color;
+
+public class Generator extends Canvas
 {
   public static boolean isSolved(int[][] puzzle)
   {
@@ -417,7 +422,57 @@ public class Generator
     int [][] guy = genSolution();
     print(guy);
     System.out.println("___");
-    int[][] puzz = genDiagSym(guy,100);
+    int[][] puzz = genDiagSym(guy,10);
     print(puzz);
+
+    JFrame frame = new JFrame("My Drawing");
+    Canvas canvas = new Generator();
+    canvas.setSize(700,700);
+    frame.add(canvas);
+    frame.pack();
+    frame.setVisible(true);
+
   }
+
+  public void paint(Graphics g)
+  {
+    //draws main square
+    g.fillRect(47,47,582,582);
+    g.setColor(Color.WHITE);
+    g.fillRect(50,50,576,576);
+    g.setColor(Color.BLACK);
+
+    //draws sectors
+
+    for(int i = 0; i < 576; i +=192)
+    {
+      for(int j = 0; j < 576; j += 192)
+      {
+        g.fillRect(48 + i ,48 + j,196,196);
+        g.setColor(Color.WHITE);
+        g.fillRect(50 + i,50 + j,192,192);
+        g.setColor(Color.BLACK);
+      }
+    }
+
+    //draws horizontals
+
+    for(int i = 50; i < 626; i += 64)
+    {
+      g.drawLine(50, i +64, 626, i+64);
+    }
+
+    //draws verticals
+    for(int i = 50; i < 626; i += 64)
+    {
+      g.drawLine(i +64, 50, i+64,626);
+    }
+
+    g.setColor(Color.BLACK);
+
+    char[] c = new char[]{'9'};
+    g.drawChars(c, 0, 1,50,50);
+
+  }
+
 }
