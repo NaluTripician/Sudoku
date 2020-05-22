@@ -422,7 +422,7 @@ public class Generator extends Canvas
     int [][] guy = genSolution();
     print(guy);
     System.out.println("___");
-    int[][] puzz = genDiagSym(guy,10);
+    int[][] puzz = genDiagSym(guy,5);
     print(puzz);
 
     JFrame frame = new JFrame("My Drawing");
