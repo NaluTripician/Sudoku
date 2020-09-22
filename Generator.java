@@ -4,6 +4,8 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Font;
+import java.util.Scanner;
 
 public class Generator extends Canvas
 {
@@ -419,12 +421,6 @@ public class Generator extends Canvas
 
   public static void main(String[] args)
   {
-    int [][] guy = genSolution();
-    print(guy);
-    System.out.println("___");
-    int[][] puzz = genDiagSym(guy,5);
-    print(puzz);
-
     JFrame frame = new JFrame("My Drawing");
     Canvas canvas = new Generator();
     canvas.setSize(700,700);
@@ -436,6 +432,9 @@ public class Generator extends Canvas
 
   public void paint(Graphics g)
   {
+    int [][] solution = genSolution();
+    int[][] puzz = genDiagSym(solution,15);
+
     //draws main square
     g.fillRect(47,47,582,582);
     g.setColor(Color.WHITE);
@@ -469,9 +468,38 @@ public class Generator extends Canvas
     }
 
     g.setColor(Color.BLACK);
+    g.setFont(new Font("Ariel", Font.PLAIN, 48));
 
-    char[] c = new char[]{'9'};
-    g.drawChars(c, 0, 1,50,50);
+    int startPosX = 68;
+    int startPosY = 100;
+
+    for(int i = 0; i < 9; i++)
+    {
+      for(int j = 0; j < 9; j++)
+      {
+        if(puzz[i][j] != 0)
+        {
+          g.drawString(Integer.toString(puzz[i][j]),68 + (i*64),100 + (j*64));
+        }
+
+      }
+    }
+
+    Scanner sc = new Scanner(System.in);
+    char next = sc.next().charAt(0); 
+
+    for(int i = 0; i < 9; i++)
+    {
+      for(int j = 0; j < 9; j++)
+      {
+        if(puzz[i][j] == 0)
+        {
+          g.setColor(Color.RED);
+          g.drawString(Integer.toString(solution[i][j]),68 + (i*64),100 + (j*64));
+        }
+
+      }
+    }
 
   }
 
